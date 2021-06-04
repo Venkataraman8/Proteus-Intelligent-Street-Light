@@ -1,0 +1,92 @@
+A51 MACRO ASSEMBLER  STREETLIGHT2                                                         05/04/2021 15:06:45 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\StreetLight2.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE StreetLight2.asm SET(SMALL) DEBUG PRINT(.\Listings\StreetLight2.lst) OB
+                      JECT(.\Objects\StreetLight2.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 00H
+                       2     
+0000 74FF              3     MOV A,#0FFH ;A=FF hex
+0002 F590              4     MOV P1,A ;make P1 an i/p port
+                       5     
+0004 7400              6     MOV A,#000H ;A=00 hex
+0006 F5A0              7     MOV P2,A ;make P2 an o/p port
+                       8     
+                       9     
+0008 C290             10     CLR P1.0
+000A C291             11     CLR P1.1
+000C C292             12     CLR P1.2
+                      13     
+                      14     
+000E C2A0             15     CLR P2.0
+0010 C2A1             16     CLR P2.1
+0012 C2A2             17     CLR P2.2
+                      18     
+0014                  19     LOOP1:
+0014 20900E           20         JB P1.0, LIGHT1
+0017 C2A0             21         CLR P2.0
+                      22     
+0019                  23         BACK:
+0019 20910D           24         JB P1.1, LIGHT2
+001C C2A1             25         CLR P2.1
+                      26     
+001E                  27         BACK1:
+001E 20920C           28         JB P1.2, LIGHT3
+0021 C2A2             29         CLR P2.2
+                      30     
+                      31     
+0023                  32         BACK2:
+0023 800C             33         SJMP OVER
+                      34     
+0025                  35         LIGHT1:
+0025 D2A0             36             SETB P2.0
+0027 80F0             37             SJMP BACK
+                      38         
+0029                  39         LIGHT2:
+0029 D2A1             40             SETB P2.1
+002B 80F1             41             SJMP BACK1
+                      42         
+002D                  43         LIGHT3:
+002D D2A2             44             SETB P2.2
+002F 80F2             45             SJMP BACK2
+                      46             
+                      47     
+0031                  48         OVER:    
+                      49         ; LCALL DELAY
+0031 80E1             50         SJMP LOOP1
+                      51     
+0300                  52         ORG 300H ;put DELAY at address 300H
+0300 7DFF             53         DELAY: MOV R5,#0FFH ;R5=255 (FF in hex), counter
+0302 DDFE             54         AGAIN: DJNZ R5,AGAIN ;stay here until R5 become 0
+0304 22               55         RET ;return to caller (when R5 =0)
+                      56     END
+A51 MACRO ASSEMBLER  STREETLIGHT2                                                         05/04/2021 15:06:45 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AGAIN. . . . . . .  C ADDR   0302H   A   
+BACK . . . . . . .  C ADDR   0019H   A   
+BACK1. . . . . . .  C ADDR   001EH   A   
+BACK2. . . . . . .  C ADDR   0023H   A   
+DELAY. . . . . . .  C ADDR   0300H   A   
+LIGHT1 . . . . . .  C ADDR   0025H   A   
+LIGHT2 . . . . . .  C ADDR   0029H   A   
+LIGHT3 . . . . . .  C ADDR   002DH   A   
+LOOP1. . . . . . .  C ADDR   0014H   A   
+OVER . . . . . . .  C ADDR   0031H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
